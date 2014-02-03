@@ -8,10 +8,11 @@ env DEBIAN_FRONTEND noninteractive
 env LC_ALL C
 env LC_ALL en_US.UTF-8
 
-# make sure the package repository is up to date
 run echo "deb http://us.archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
-run apt-get update
-run apt-get install -y redis-server
+run apt-get update 
+run apt-get install -y redis-server --no-install-recommends
+run apt-get upgrade -y && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* 
 
 expose 6379
 entrypoint ["/usr/bin/redis-server"]
+
